@@ -1,12 +1,10 @@
 from flask import Flask
+from flask_frozen import Freezer
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config')
 
-
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
-
-
-if __name__ == '__main__':
-    app.run()
+    from app.routes import main
+    app.register_blueprint(main)
+    return app
